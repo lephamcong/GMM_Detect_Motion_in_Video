@@ -1,0 +1,11 @@
+opencv-python==4.9.0.80
+numpy==1.26.4
+matplotlib==3.7.1
+fnmatch
+natsort==8.4.0
+glob2
+math
+time
+scikit-image==0.22.0
+csv
+Pillow
