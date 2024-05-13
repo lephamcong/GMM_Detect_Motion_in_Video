@@ -19,7 +19,7 @@
 \usepackage[sorting=none]{biblatex}
 \addbibresource{references.bib}
 \usepackage{hyperref}
-
+\usepackage{array}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{amsmath}
@@ -107,8 +107,8 @@
 \end{flushleft}
 \begin{center}
     \hspace{10pt}
-    \fontsize{17pt}{17pt}\selectfont 
-    \textbf{\textrm{Ứng dụng GMM phát hiện đối tượng chuyển động trong video}}
+    \fontsize{18pt}{17pt}\selectfont 
+    \textbf{\textrm{Ứng dụng GMM phát hiện đối tượng \\ chuyển động trong video}}
 \end{center}
 \begin{center}
     \fontsize{16pt}{17pt}\selectfont 
@@ -124,21 +124,21 @@
 \begin{addmargin}[1cm]{0cm}
 \textbf{Sinh viên thực hiện: \hspace{2.6cm}NHÓM 2}
 \begin{tabbing}
-\hspace{6cm}\=\hspace{3cm}\=\hspace{3cm} \kill
-{\textbf{Họ và tên}}\>{\textbf{MSSV}}\>{\textbf{Mã học phần}}\\
-\hspace{6cm}\=\hspace{3cm}\=\hspace{3cm} \kill
-Lê Phạm Công\> 106200221\> 20.44\\
-\hspace{6cm}\=\hspace{3cm}\=\hspace{3cm} \kill
-Phan Công Danh\> 106200222\> 20.44\\
-\hspace{6cm}\=\hspace{3cm}\=\hspace{3cm} \kill
-Đoàn Thế Lên\> 106200233\> 20.44\\
-\hspace{6cm}\=\hspace{3cm}\=\hspace{3cm} \kill
-Lê Minh Nhật\> 106200238\> 20.44\\
+\hspace{4cm}\=\hspace{3cm}\=\hspace{5cm} \kill
+{\textbf{Họ và tên}}\>{\textbf{MSSV}}\>{\textbf{Email liên hệ}}\\
+\hspace{4cm}\=\hspace{3cm}\=\hspace{5cm} \kill
+Lê Phạm Công\> 106200221\> lpc051002@gmail.com\\
+\hspace{4cm}\=\hspace{3cm}\=\hspace{5cm} \kill
+Phan Công Danh\> 106200222\> phancongdanh1542k2@gmail.com\\
+\hspace{4cm}\=\hspace{3cm}\=\hspace{5cm} \kill
+Đoàn Thế Lên\> 106200233\> lendoan07@gmail.com\\
+\hspace{4cm}\=\hspace{3cm}\=\hspace{5cm} \kill
+Lê Minh Nhật\> 106200238\> minhat13579@gmail.com\\
 \end{tabbing}
 \end{addmargin}
-\vspace{1cm}
+\vspace{0cm}
 \begin{center}
-    \textit{\textbf{Đà Nẵng, ngày 31 tháng 05 năm 2024}}
+    \textit{\textbf{Đà Nẵng, ngày 13 tháng 05 năm 2024}}
 \end{center}
 \end{titlepage}
 % -------------------------------------End trang bìa-----------------------
@@ -149,10 +149,9 @@ Lê Minh Nhật\> 106200238\> 20.44\\
 % ----------------------- MAIN DOCUMENT---------------------------%
 \section*{Tóm tắt}
 \addcontentsline{toc}{section}{Tóm tắt}
-Trong báo cáo này trình bày một giải pháp sử dụng thuật toán
-phân cụm Gaussian Mixture Models để phát hiện đối tượng chuyển động trong video với ý tưởng là phép trừ nền. Trong phương pháp đề xuất, video vào được chuyển đổi thành các frame,
-sau đó áp dụng thuật toán Gaussian Mixture Models để phân cụm các điểm ảnh nhằm phân tách nền và các đối tượng sau đó áp dụng phép trừ nền để tìm các đối tượng chuyển động. Kết quả thu được là video chứa các đối tượng chuyển động được phát hiện. 
-Mã nguồn của báo cáo có thể được tìm thấy tại: \url{https://drive.google.com/drive/folders/16n3Rrp28noYswsqQs8qazX2qylk2z2YL?usp=sharing}
+Báo cáo này giới thiệu một phương pháp sử dụng thuật toán Gaussian Mixture Models (GMM) cho bài toán phát hiện các đối tượng chuyển động trong video bằng cách sử dụng kỹ thuật trừ nền. Cụ thể, video đầu vào được tách thành từng khung hình (frame). Sau đó, sử dụng thuật toán GMM để phân cụm các điểm ảnh, giúp phân biệt nền với các đối tượng chuyển động. Phương pháp trừ nền được áp dụng tiếp theo để xác định các đối tượng đang chuyển động. Kết quả cuối cùng là một video chỉ hiển thị các đối tượng chuyển động đã được phát hiện.
+
+Mã nguồn của báo cáo có thể được tìm thấy tại: \url{https://github.com/lephamcong/GMM_Detect_Motion_in_Video.git}
 
 \section{Giới thiệu}
 Trong lĩnh vực xử lý hình ảnh và thị giác máy tính, việc phát hiện chuyển động trong video là một bài toán quan trọng với nhiều ứng dụng như giám sát an ninh, theo dõi đối tượng và phân tích hành vi. Phát hiện chuyển động giúp trích xuất các thông tin hữu ích từ luồng video, đặc biệt là trong các tình huống có thay đổi quan trọng trong cảnh quay.
@@ -281,53 +280,91 @@ Thuật toán Gaussian Mixture Model thực hiện việc phát hiện đối t�
     \item Bước 8. Lặp lại quá trình cho đến khi các giá trị trung bình, phương sai và trọng số hội tụ.
 \end{itemize}
 \newpage
-\section{Kết quả}
+\section{Thực hiện}
 Dữ liệu được sử dụng là video được quay bởi camera giám sát giao thông, thông số video như sau: thời lượng 30s, kích thước khung hình 1920x1080pixels, tốc độ khung hình 25fps. Đường dẫn đến dữ liệu: \url{https://drive.google.com/file/d/1BXUZeLSU-4lmNtu7ZnffGqG2RwKMkNBU/view?usp=sharing}
 
-Kết quả thử nghiệm với video dữ liệu như sau: 
+Ngôn ngữ lập trình được sử dụng là Python 3.11.2 với các phiên bản thư viện sau: 
 \begin{itemize}[label={}]
-    \item 1) Ảnh nền
+    \item opencv-python==4.9.0.80
+    \item numpy==1.26.4
+    \item matplotlib==3.7.1
+    \item fnmatch
+    \item natsort==8.4.0
+    \item glob2
+    \item math
+    \item time
+    \item scikit-image==0.22.0
+    \item csv
+    \item Pillow
+\end{itemize}
+\subsection{Kết quả thử nghiệm với video dữ liệu} 
+\begin{itemize}[label={}]
+    \item a) Ảnh nền
     \begin{figure}
         \centering
         \includegraphics[width=0.7\linewidth]{images//result/background.png}
         \label{fig:background}
         \textit{\caption{Ảnh nền}}
     \end{figure}
-    \item 2) Một số frame sau khi thực hiện phép trừ nền (tất cả frame được lưu trữ lại folder frame) như bảng \ref{fig:answer}
-    \begin{table}
+    \item b) Một số frame sau khi thực hiện phép trừ nền (tất cả frame được lưu trữ lại folder frame) như bảng \ref{table:answer}
+    \begin{table}[h!]
         \centering
-        \textbf{\caption{Kết quả của phép trừ nền trên một số frame}}
-        \includegraphics[width=0.75\linewidth]{images//result/result3.png}
-        \label{fig:answer}
+        \textbf{\caption{Bảng kết quả phép trừ nền}}
+        \begin{tabular}{|>{\centering\arraybackslash}m{6cm}|>{\centering\arraybackslash}m{6cm}|}
+        \hline
+        \textbf{Frame} & \textbf{Kết quả phép trừ nền} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/result/frame/frame196.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/result/answer/frame196.jpg} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/result/frame/frame300.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/result/answer/frame300.jpg} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/result/frame/frame492.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/result/answer/frame492.jpg} \\ \hline
+        \end{tabular}
+        \label{table:answer}
     \end{table}
-    \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ 
-    \item 3) Video kết quả: \url{https://youtu.be/2Ktw_daaETQ}
-    \item 4)  Độ chính xác: Các khung hình đầu ra được tính toán bằng thuật toán được so sánh với các khung hình đầu ra thu được sau khi sử dụng hàm BackgroundSubtractorMOG2 dựng sẵn trong OpenCV2. Số liệu được sử dụng cho so sánh là MSE\cite{mean_squared_error}. Các khung hình từ thuật toán được xây dựng chỉ được chuyển đổi sang màu đen và trắng cho so sánh công bằng vì hàm dựng sẵn chỉ cung cấp các khung đầu ra có màu đen và trắng. Giá trị lớn nhất RMSE thu được là 86,37 và RMSE tối thiểu thu được là 3.17 
-    \item 5) Histogram của MSE (hình \ref{fig:mse}):
+     
+    \item c) Video kết quả: \url{https://youtu.be/2Ktw_daaETQ}
+    \item d)  Độ chính xác: Các khung hình đầu ra được tính toán bằng thuật toán được so sánh với các khung hình đầu ra thu được sau khi sử dụng hàm BackgroundSubtractorMOG2 dựng sẵn trong OpenCV2. Số liệu được sử dụng cho so sánh là MSE\cite{mean_squared_error}. Các khung hình từ thuật toán được xây dựng chỉ được chuyển đổi sang màu đen và trắng cho so sánh công bằng vì hàm dựng sẵn chỉ cung cấp các khung đầu ra có màu đen và trắng. Giá trị lớn nhất RMSE thu được là 86,37 và RMSE tối thiểu thu được là 3.17
+    \\ \\ \\ \\ \\ \\ 
+    \item e) Histogram của MSE (hình \ref{fig:mse}):
     \begin{figure}
         \centering
         \includegraphics[width=1\linewidth]{images//result/mse.png}
         \caption{Histogram của MSE}
         \label{fig:mse}
     \end{figure}
-    \item 6) So sánh với thuật toán được xây dựng và sử dụng thư viện Opencv như bảng 2:
-    \begin{table}
+    
+    \item f) So sánh với thuật toán được xây dựng và sử dụng thư viện Opencv như bảng 2:
+    \begin{table}[h!]
         \centering
         \textbf{\caption{So sánh kết quả phép trừ nền giữa thuật toán được xây dựng và hàm có sẵn trong thư viện}}
-        \includegraphics[width=1\linewidth]{images//result/sosanh.png}
-        \label{fig:so-sanh}
+        \begin{tabular}{|>{\centering\arraybackslash}m{6cm}|>{\centering\arraybackslash}m{6cm}|}
+        \hline
+        \textbf{Kết quả của thuật toán} & \textbf{Kết quả khi dùng thư viện OpenCV} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/answer1/frame186.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/answer2/frame186.jpg} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/answer1/frame315.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/answer2/frame315.jpg} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/answer1/frame328.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/answer2/frame328.jpg} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/answer1/frame588.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/answer2/frame588.jpg} \\ \hline
+        \includegraphics[width=5.5cm,height=3.5cm]{images/answer1/frame613.jpg} & \includegraphics[width=5.5cm,height=3.5cm]{images/answer2/frame613.jpg} \\ \hline
+        \end{tabular}
+        \label{table:so-sanh}
     \end{table}
 \end{itemize}
 \newpage
-\section{Đánh giá}
-Đầu tiên, thuật toán đã xác định đúng ảnh nền, đây là bước quan trọng đảm bảo phép trừ nền thực hiện chính xác hay không, nếu không xác định đúng nền, có thể dẫn đến kết quả cuối cùng không chính xác.
+\subsection{Đánh giá}
+Với ảnh nền thu được, thuật toán đã xác định đúng ảnh nền, đây là bước quan trọng đảm bảo phép trừ nền thực hiện chính xác hay không, nếu không xác định đúng nền, có thể dẫn đến kết quả cuối cùng không chính xác.
 
-Thứ hai, phép trừ nền mang lại kết quả tương đối, một số chi tiết bị mất, nguyên nhân là do một số chi tiết có màu trùng với màu nền hoặc chất lượng video đầu vào không tốt vẫn còn nhiễu nên các chi tiết đó bị trùng với nền.
+Sau khi thực hiện phép trừ nền, kết quả mang lại kết quả tương đối, một số chi tiết bị mất, nguyên nhân là do một số chi tiết có màu trùng với màu nền hoặc chất lượng video đầu vào không tốt vẫn còn nhiễu nên các chi tiết đó bị trùng với nền.
 
-Thứ ba, kết quả trong video đầu ra là các đối tượng được cho là đang chuyển động trong video, dựa vào video kết quả có thể nhận thấy, thuật toán đã detect thành công các đối tượng chuyển động trong video với sự hỗ trợ của Gaussian Mixture Model
+Kết quả trong video đầu ra là các đối tượng được cho là đang chuyển động trong video, dựa vào video kết quả có thể nhận thấy, thuật toán đã detect thành công các đối tượng chuyển động trong video với sự hỗ trợ của Gaussian Mixture Model
 
-Thứ tư, giá trị lớn nhất RMSE thu được là 86,37 và RMSE tối thiểu thu được là 3.17. Giá trị MSE cao chỉ ra rằng có một sự chênh lệch đáng kể giữa hình ảnh dự đoán và hình ảnh thực tế trong một số trường hợp cụ thể, ở đây là giữa việc sử dụng thuật toán tự xây dựng và thư viện hỗ trợ. Giá trị MSE thấp cho thấy thuật toán hoạt động tốt trong một số khung hình, với sự chênh lệch ít giữa hình ảnh dự đoán và hình ảnh thực tế. Điều này có thể xảy ra trong các điều kiện lý tưởng nơi nền tương đối đơn giản và ít nhiễu, hoặc khi các đối tượng chuyển động có đường nét rõ ràng. Thông qua việc xem xét chi tiết các trường hợp khi RMSE đạt giá trị cao nhất và thấp nhất để tìm ra cách để tối ưu hóa thuật toán và cải thiện độ chính xác của nó trong các tình huống khác nhau.
+Để đánh giá độ chính xác của thuật toán, thực hiện so sánh bằng tiêu chí Mean Square Error\cite{mean_squared_error}, giá trị lớn nhất MSE thu được là 86,37 và MSE tối thiểu thu được là 3.17. Giá trị MSE cao chỉ ra rằng có một sự chênh lệch đáng kể giữa hình ảnh dự đoán và hình ảnh thực tế trong một số trường hợp cụ thể, ở đây là giữa việc sử dụng thuật toán tự xây dựng và thư viện hỗ trợ. Giá trị MSE thấp cho thấy thuật toán hoạt động tốt trong một số khung hình, với sự chênh lệch ít giữa hình ảnh dự đoán và hình ảnh thực tế. Điều này có thể xảy ra trong các điều kiện lý tưởng nơi nền tương đối đơn giản và ít nhiễu, hoặc khi các đối tượng chuyển động có đường nét rõ ràng. Thông qua việc xem xét chi tiết các trường hợp khi RMSE đạt giá trị cao nhất và thấp nhất để tìm ra cách để tối ưu hóa thuật toán và cải thiện độ chính xác của nó trong các tình huống khác nhau.
 
+Bảng 2 so sánh một số phép sau khi thực hiện phép trừ nền bằng thuật toán xây dựng và sử dụng thư viện Opencv được cung cấp bởi Python, dựa vào bảng, có thể rút ra một số đánh giá như sau:
+\begin{itemize}[label={}]
+    \item \textbf{Hiệu quả phân biệt đối tượng và nền:} Các kết quả phép trừ nền hiển thị rõ ràng sự khác biệt giữa đối tượng (xe cộ) và nền. Điều này cho thấy thuật toán đã hiệu quả trong việc phân biệt đối tượng chuyển động so với nền tĩnh.
+    \item \textbf{Tính năng của thuật toán:} Các khung hình cho thấy thuật toán có khả năng xử lý tốt trong các điều kiện khác nhau của đối tượng chuyển động, bao gồm cả sự thay đổi về góc nhìn và kích thước của đối tượng. Điều này là quan trọng đối với các ứng dụng thực tế như giám sát an ninh hoặc các hệ thống an toàn giao thông.
+   \item  \textbf{Chất lượng hình ảnh:} Các hình ảnh kết quả phép trừ nền tuy đơn giản nhưng khá rõ ràng và dễ phân biệt. Điều này là cần thiết để có thể tiếp tục với các bước xử lý ảnh tiếp theo như nhận dạng hoặc theo dõi đối tượng.
+   \item \textbf{Độ chính xác và tiềm năng cải thiện:} Trong khi các kết quả cho thấy khả năng tách biệt tốt, cần lưu ý đến các vấn đề như bóng đổ hoặc phản chiếu có thể ảnh hưởng đến độ chính xác. Cải tiến thuật toán để giảm thiểu những ảnh hưởng này có thể là một hướng đi tiếp theo.
+   
+\end{itemize}
 \section{Kết luận}
 Việc sử dụng mô hình Gaussian Mixture (GMM) để phát hiện đối tượng chuyển động trong video là một phương pháp phổ biến và có hiệu quả, nhất là trong các ứng dụng giám sát video và an ninh. Dưới đây là một số điểm mạnh và hạn chế của phương pháp này, cùng với một số kết luận về hiệu quả của nó:
 Điểm Mạnh:
@@ -345,7 +382,11 @@ Hạn Chế:
 
 Tóm lại, mô hình Gaussian Mixture là một công cụ mạnh mẽ để phát hiện đối tượng chuyển động trong video, nhờ khả năng mô hình hóa chính xác và thích ứng với sự thay đổi của nền. Tuy nhiên, tính hiệu quả của nó có thể bị ảnh hưởng trong các điều kiện nhiễu hoặc động. Để tối đa hóa hiệu quả, các nhà phát triển và nhà nghiên cứu nên cân nhắc kết hợp GMM với các kỹ thuật khác như bộ lọc nhiễu, phân tích điểm khóa, hoặc sử dụng nó trong một khuôn khổ học sâu nâng cao để giải quyết các hạn chế về nhiễu và tốn kém tính toán. Các cải tiến này có thể giúp GMM trở thành một giải pháp hiệu quả hơn cho các ứng dụng giám sát video và an ninh hiện đại.
 
-
+\section{Phụ lục}
+\begin{itemize}[label={}]
+    \item \textbf{Toàn bộ data, source code và các kết quả thu được có tại link sau:} \url{https://github.com/lephamcong/GMM_Detect_Motion_in_Video.git}
+    \item \textbf{Link video kết quả: }\url{https://youtu.be/2Ktw_daaETQ}
+\end{itemize}
 %---------------------REFERENCES --------------------------------%
 \newpage
 \renewcommand*{\bibfont}{\small}
